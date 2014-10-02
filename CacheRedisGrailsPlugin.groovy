@@ -65,27 +65,27 @@ class CacheRedisGrailsPlugin {
 
 		def cacheConfig = application.config.grails.cache
 		def redisCacheConfig = cacheConfig.redis
-		int database = redisCacheConfig.database ?: 0
-		boolean usePool = (redisCacheConfig.usePool instanceof Boolean) ? redisCacheConfig.usePool : true
-		String hostName = redisCacheConfig.hostName ?: 'localhost'
-		int port = redisCacheConfig.port ?: Protocol.DEFAULT_PORT
-		int timeout = redisCacheConfig.timeout ?: Protocol.DEFAULT_TIMEOUT
-		String password = redisCacheConfig.password ?: null
+		int databaseValue = redisCacheConfig.database ?: 0
+		boolean usePoolValue = (redisCacheConfig.usePool instanceof Boolean) ? redisCacheConfig.usePool : true
+		String hostNameValue = redisCacheConfig.hostName ?: 'localhost'
+		int portValue = redisCacheConfig.port ?: Protocol.DEFAULT_PORT
+		int timeoutValue = redisCacheConfig.timeout ?: Protocol.DEFAULT_TIMEOUT
+		String passwordValue = redisCacheConfig.password ?: null
 
 		grailsCacheJedisPoolConfig(JedisPoolConfig)
 
-		grailsCacheJedisShardInfo(JedisShardInfo, hostName, port) {
-			password = password
-			timeout = timeout
+		grailsCacheJedisShardInfo(JedisShardInfo, hostNameValue, portValue) {
+			password = passwordValue
+			timeout = timeoutValue
 		}
 
 		grailsCacheJedisConnectionFactory(JedisConnectionFactory) {
-			usePool = usePool
-			database = database
-			hostName = hostName
-			port = port
-			timeout = timeout
-			password = password
+			usePool = usePoolValue
+			database = databaseValue
+			hostName = hostNameValue
+			port = portValue
+			timeout = timeoutValue
+			password = passwordValue
 			poolConfig = ref('grailsCacheJedisPoolConfig')
 			shardInfo = ref('grailsCacheJedisShardInfo')
 		}
